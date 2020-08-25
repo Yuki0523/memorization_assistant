@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}知識の定着を支援するWebアプリケーション | Memorization Assistant{% endblock %}
+
+{% block contents %}
+    <section>
+        <div class="my-div-style">
+            <div class="container-fluid">
+                <div class="row h-75">
+                    <div class="col">
+                        <a href="#" class="my-button-style">
+                            <div class="rounded-pill mx-auto h-100 d-flex align-items-center justify-content-center"
+                                 id="touroku">
+                                <div>
+                                    <h1 class="text-center">登録</h1>
+                                    <p class="text-center">新たに学んだことをデータベースに登録しておきましょう。<br>
+                                        登録された内容は、復習モードにおいて最適なタイミングで出題されます。</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="#" class="my-button-style">
+                            <div class="rounded-pill mx-auto h-100 d-flex align-items-center justify-content-center"
+                                 id="fukushu">
+                                <div>
+                                    <h1 class="text-center">復習</h1>
+                                    <p class="text-center">"いま"復習すべきことをデータベースから出題します。<br>
+                                        復習の結果は記録され、次の出題タイミングの算出に用いられます。</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
