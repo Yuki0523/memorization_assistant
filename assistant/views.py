@@ -9,3 +9,11 @@ class TopView(generic.TemplateView):
             template_name = 'top.html'
 
         return [template_name]
+
+
+class RegistrationView(generic.TemplateView):
+    template_name = 'registration.html'
+
+
+class ReviewView(generic.TemplateView):
+    template_name = 'review.html'
