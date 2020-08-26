@@ -3,3 +3,44 @@
 {% load static %}
 
 {% block title %}復習モード | Memorization Assistant{% endblock %}
+
+{% block contents %}
+    <section>
+        <div class="my-div-style container-fluid h-75 d-flex align-items-center justify-content-center">
+            <div class="col">
+                <div class="text-center">
+                    <h2 class="">問題</h2>
+                    <p class="">これは問題文です。</p>
+                    <div class="d-flex justify-content-center">
+                    <input class="row" type="button" value="解答を表示する" onclick="clickBtn()"/>
+                    </div>
+                </div>
+                <hr>
+                <div id="kaitou" class="text-center">
+                    <h2>解答</h2>
+                    <p>これは解答文です。</p>
+                    <div>
+                        <h6>正答できましたか？</h6>
+                        <input class="" type="button" value="Yes" onclick=""/>
+                        <input class="" type="button" value="No" onclick=""/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        document.getElementById('kaitou').style.visibility = 'hidden';
+
+        function clickBtn() {
+            const kaitou = document.getElementById('kaitou');
+
+            if (kaitou.style.visibility == 'hidden') {
+                kaitou.style.visibility = 'visible';
+            } else {
+                kaitou.style.visibility = 'hidden';
+            }
+        }
+    </script>
+{% endblock %}
