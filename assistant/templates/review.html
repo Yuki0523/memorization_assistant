@@ -25,8 +25,8 @@
                     <p id="kaitoubun"></p>
                     <div>
                         <h6>正答できましたか？</h6>
-                        <input class="" type="button" value="Yes" onclick="makeKaitouHidden();countUpOrFinish();setReview();recordReview()"/>
-                        <input class="" type="button" value="No" onclick="makeKaitouHidden();countUpOrFinish();setReview();incorrect();recordReview()"/>
+                        <input class="" type="button" value="Yes" onclick="recordReview();makeKaitouHidden();countUpOrFinish();setReview()"/>
+                        <input class="" type="button" value="No" onclick="incorrect();recordReview();makeKaitouHidden();countUpOrFinish();setReview()"/>
                     </div>
                 </div>
             </div>

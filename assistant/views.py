@@ -61,8 +61,15 @@ class RecordReviewView(LoginRequiredMixin, base.View):
     template_name = 'review.html'
 
     def post(self, request, *args, **kwargs):
+        result = json.loads(request.body)
+        review_record = ReviewRecord.objects.create(
+            target=Register.objects.filter(pk=result['pk']).first(),
+            result=result['result'],
+            reviewed_at=date.today()
+        )
         print(request.method)
-        print(register := Register.objects.filter(pk=6))
+        print(register := Register.objects.filter(pk=result['pk']))
         print(ReviewRecord.objects.filter(target=register.first()))
         print(json.loads(request.body))
+        print(review_record)
         return JsonResponse({})
