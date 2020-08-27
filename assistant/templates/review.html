@@ -11,7 +11,7 @@
 {% block contents %}
     <section>
         <div class="my-div-style container-fluid h-75 d-flex align-items-center justify-content-center">
-            <div class="col">
+            <div id="review" class="col">
                 <div class="text-center">
                     <h2 class="">問題</h2>
                     <p id="mondaibun"></p>
@@ -55,6 +55,9 @@
         function countUpOrFinish() {
             if (count < reviewList.length) {
                 count += 1
+            }
+            else {
+                document.getElementById('review').innerHTML = '<h1 class="text-center">解答終了</h1>'
             }
         }
 
