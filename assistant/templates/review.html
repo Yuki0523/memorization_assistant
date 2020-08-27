@@ -36,7 +36,7 @@
     <script type="text/javascript">
         let reviewList = [{% for review in review_list %}
             {{% for k, v in review.items %}
-            {% if k == 'pk' %}    {{ k }}: {{ v }}{% else %}    {{ k }}: '{{ v }}'{% endif %},{% endfor %}
+            {% if k == 'pk' %}    {{ k }}: {{ v }}{% else %}    {{ k }}: "{{ v }}"{% endif %},{% endfor %}
             },
         {% endfor %}]
 
