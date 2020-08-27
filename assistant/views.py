@@ -42,10 +42,7 @@ class RegistrationView(LoginRequiredMixin, generic.CreateView):
 class ReviewView(generic.TemplateView):
     template_name = 'review.html'
 
-
-def response_review_json(request):
-    review_json_list = []
-    for review in Register.objects.all():
-        review_json_list.append(review.to_dict_for_json())
-    print(review_json_list)
-    return JsonResponse(review_json_list, safe=False)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['review_list'] = [review.to_dict() for review in Register.objects.filter(user=self.request.user)]
+        return context

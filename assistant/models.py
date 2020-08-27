@@ -15,7 +15,7 @@ class Register(models.Model):
     def __str__(self):
         return self.question
 
-    def to_dict_for_json(self):
+    def to_dict(self):
         return {
             'pk': self.pk,
             'question': self.question,
