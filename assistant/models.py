@@ -15,6 +15,13 @@ class Register(models.Model):
     def __str__(self):
         return self.question
 
+    def to_dict_for_json(self):
+        return {
+            'pk': self.pk,
+            'question': self.question,
+            'answer': self.answer,
+        }
+
 
 class ReviewRecord(models.Model):
     """復習の記録モデル"""

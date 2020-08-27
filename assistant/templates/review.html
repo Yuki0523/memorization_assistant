@@ -12,7 +12,7 @@
                     <h2 class="">問題</h2>
                     <p class="">これは問題文です。</p>
                     <div class="d-flex justify-content-center">
-                    <input class="row" type="button" value="解答を表示する" onclick="clickBtn()"/>
+                        <input class="row" type="button" value="解答を表示する" onclick="clickBtn()"/>
                     </div>
                 </div>
                 <hr>
@@ -29,6 +29,15 @@
         </div>
     </section>
 
+    <p>
+        <a id="sampleA" href="#">サンプル</a>
+        <span id="sampleOutput" style="margin-left: 10px;">1</span>
+        <span id="sqare" style="margin-left: 10px;"></span>
+    </p>
+
+    <p id="test"></p>
+
+    <script type="text/javascript" src="{% static 'js/jquery-3.5.1.js' %}"></script>
 
     <script>
         document.getElementById('kaitou').style.visibility = 'hidden';
@@ -43,4 +52,37 @@
             }
         }
     </script>
+
+    <script type="text/javascript">
+        sqare();
+
+        window.onload = function () {
+            document.getElementById("sampleA").onclick = function () {
+                sampleFn();
+                return false;
+            };
+        }
+
+        function sampleFn() {
+            var $count = document.getElementById("sampleOutput").innerHTML;
+            document.getElementById("sampleOutput").innerHTML = ++$count;
+            sqare();
+        }
+
+        function sqare() {
+            document.getElementById('sqare').innerHTML = document.getElementById("sampleOutput").innerHTML ** 2;
+        }
+
+    </script>
+
+    <script>
+    $.get('{% url 'assistant:response_review_json' %}')
+
+    .done(function (data){
+        document.getElementById('test').innerHTML = data[0].question
+    })
+    {#.done(function (data){console.log(data.form)})#}
+    {#.done(function (data){$('#test').text(data[0].question))})#}
+    </script>
+
 {% endblock %}

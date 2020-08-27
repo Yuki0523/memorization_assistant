@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 
 from .models import Register
 from .forms import RegistrationForm
@@ -40,3 +41,11 @@ class RegistrationView(LoginRequiredMixin, generic.CreateView):
 
 class ReviewView(generic.TemplateView):
     template_name = 'review.html'
+
+
+def response_review_json(request):
+    review_json_list = []
+    for review in Register.objects.all():
+        review_json_list.append(review.to_dict_for_json())
+    print(review_json_list)
+    return JsonResponse(review_json_list, safe=False)
