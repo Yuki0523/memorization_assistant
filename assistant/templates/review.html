@@ -4,85 +4,67 @@
 
 {% block title %}復習モード | Memorization Assistant{% endblock %}
 
+{% block head %}
+    <script src="{% static 'js/jquery-3.5.1.js' %}"></script>
+{% endblock %}
+
 {% block contents %}
     <section>
         <div class="my-div-style container-fluid h-75 d-flex align-items-center justify-content-center">
             <div class="col">
                 <div class="text-center">
                     <h2 class="">問題</h2>
-                    <p class="">これは問題文です。</p>
+                    <p id="mondaibun"></p>
                     <div class="d-flex justify-content-center">
-                        <input class="row" type="button" value="解答を表示する" onclick="clickBtn()"/>
+                        <input class="row" type="button" value="解答を表示する" onclick="ChangeKaitouVisibility()"/>
                     </div>
                 </div>
                 <hr>
                 <div id="kaitou" class="text-center">
                     <h2>解答</h2>
-                    <p>これは解答文です。</p>
+                    <p id="kaitoubun"></p>
                     <div>
                         <h6>正答できましたか？</h6>
-                        <input class="" type="button" value="Yes" onclick=""/>
-                        <input class="" type="button" value="No" onclick=""/>
+                        <input class="" type="button" value="Yes" onclick="makeKaitouHidden();countUpOrFinish()"/>
+                        <input class="" type="button" value="No" onclick="makeKaitouHidden();countUpOrFinish()"/>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <p>
-        <a id="sampleA" href="#">サンプル</a>
-        <span id="sampleOutput" style="margin-left: 10px;">1</span>
-        <span id="sqare" style="margin-left: 10px;"></span>
-    </p>
+    <script type="text/javascript">
+        function makeKaitouHidden() {
+            document.getElementById('kaitou').style.visibility = 'hidden'
+        }
 
-    <p id="test"></p>
-
-    <script type="text/javascript" src="{% static 'js/jquery-3.5.1.js' %}"></script>
-
-    <script>
-        document.getElementById('kaitou').style.visibility = 'hidden';
-
-        function clickBtn() {
+        function ChangeKaitouVisibility() {
             const kaitou = document.getElementById('kaitou');
 
             if (kaitou.style.visibility == 'hidden') {
-                kaitou.style.visibility = 'visible';
+                kaitou.style.visibility = 'visible'
             } else {
-                kaitou.style.visibility = 'hidden';
+                kaitou.style.visibility = 'hidden'
             }
         }
-    </script>
 
-    <script type="text/javascript">
-        sqare();
-
-        window.onload = function () {
-            document.getElementById("sampleA").onclick = function () {
-                sampleFn();
-                return false;
-            };
+        function countUpOrFinish() {
+            if (count < 20) {
+                count += 1
+            }
         }
 
-        function sampleFn() {
-            var $count = document.getElementById("sampleOutput").innerHTML;
-            document.getElementById("sampleOutput").innerHTML = ++$count;
-            sqare();
-        }
 
-        function sqare() {
-            document.getElementById('sqare').innerHTML = document.getElementById("sampleOutput").innerHTML ** 2;
-        }
+        makeKaitouHidden();
 
-    </script>
+        let count = 1;
 
-    <script>
-    $.get('{% url 'assistant:response_review_json' %}')
+        $.get('{% url 'assistant:response_review_json' %}')
+            .done(function (data) {
+                document.getElementById('mondaibun').innerHTML = data[count - 1].question;
+                document.getElementById('kaitoubun').innerHTML = data[count - 1].answer;
+            })
 
-    .done(function (data){
-        document.getElementById('test').innerHTML = data[0].question
-    })
-    {#.done(function (data){console.log(data.form)})#}
-    {#.done(function (data){$('#test').text(data[0].question))})#}
     </script>
 
 {% endblock %}
