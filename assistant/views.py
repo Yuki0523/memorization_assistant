@@ -1,10 +1,12 @@
 from datetime import date
+import json
 
 from django.contrib import messages
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django.views.generic import base
 
 from .models import Register
 from .forms import RegistrationForm
@@ -39,10 +41,22 @@ class RegistrationView(LoginRequiredMixin, generic.CreateView):
         return super().form_invalid(form)
 
 
-class ReviewView(generic.TemplateView):
+class ReviewView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'review.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['review_list'] = [review.to_dict() for review in Register.objects.filter(user=self.request.user)]
+        context['review_list'] = json.dumps(
+            [review.to_dict() for review in Register.objects.filter(user=self.request.user)],
+            ensure_ascii=False
+        )
+        print(context['review_list'])
         return context
+
+
+class RecordReviewView(LoginRequiredMixin, base.View):
+    template_name = 'review.html'
+
+    def get(self, request, *args, **kwargs):
+        print(request.method)
+        return JsonResponse({'hoge': 'choge'})

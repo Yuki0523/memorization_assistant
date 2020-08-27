@@ -34,12 +34,7 @@
     </section>
 
     <script type="text/javascript">
-        let reviewList = [{% for review in review_list %}
-            {{% for k, v in review.items %}
-            {% if k == 'pk' %}    {{ k }}: {{ v }}{% else %}    {{ k }}: "{{ v }}"{% endif %},{% endfor %}
-            },
-        {% endfor %}]
-
+        let reviewList = {{ review_list|safe }};
 
         function makeKaitouHidden() {
             document.getElementById('kaitou').style.visibility = 'hidden'
@@ -69,6 +64,10 @@
             document.getElementById('mondaibun').innerHTML = reviewList[count - 1]['question'];
             document.getElementById('kaitoubun').innerHTML = reviewList[count - 1]['answer'];
             pk = reviewList[count - 1]['pk'];
+        }
+
+        function recordReview() {
+
         }
 
         makeKaitouHidden();
