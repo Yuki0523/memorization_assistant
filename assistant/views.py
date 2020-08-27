@@ -7,8 +7,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.views.generic import base
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Register
+from .models import ReviewRecord
 from .forms import RegistrationForm
 
 
@@ -50,13 +53,16 @@ class ReviewView(LoginRequiredMixin, generic.TemplateView):
             [review.to_dict() for review in Register.objects.filter(user=self.request.user)],
             ensure_ascii=False
         )
-        print(context['review_list'])
         return context
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class RecordReviewView(LoginRequiredMixin, base.View):
     template_name = 'review.html'
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         print(request.method)
-        return JsonResponse({'hoge': 'choge'})
+        print(register := Register.objects.filter(pk=6))
+        print(ReviewRecord.objects.filter(target=register.first()))
+        print(json.loads(request.body))
+        return JsonResponse({})

@@ -25,8 +25,8 @@
                     <p id="kaitoubun"></p>
                     <div>
                         <h6>正答できましたか？</h6>
-                        <input class="" type="button" value="Yes" onclick="makeKaitouHidden();countUpOrFinish();setReview()"/>
-                        <input class="" type="button" value="No" onclick="makeKaitouHidden();countUpOrFinish();setReview()"/>
+                        <input class="" type="button" value="Yes" onclick="makeKaitouHidden();countUpOrFinish();setReview();recordReview()"/>
+                        <input class="" type="button" value="No" onclick="makeKaitouHidden();countUpOrFinish();setReview();incorrect();recordReview()"/>
                     </div>
                 </div>
             </div>
@@ -60,21 +60,29 @@
 
         let pk
 
+        let result
+
         function setReview() {
             document.getElementById('mondaibun').innerHTML = reviewList[count - 1]['question'];
             document.getElementById('kaitoubun').innerHTML = reviewList[count - 1]['answer'];
             pk = reviewList[count - 1]['pk'];
+            result = true
+        }
+
+        function incorrect() {
+            result = false
         }
 
         function recordReview() {
-
+            $.ajax({
+                url: '{% url 'assistant:record_review' %}',
+                type: 'POST',
+                data: JSON.stringify({pk: pk, result: result})
+            })
         }
 
         makeKaitouHidden();
         setReview()
-
-        {#document.getElementById('mondaibun').innerHTML = reviewList[count-1]['question'];#}
-        {#document.getElementById('kaitoubun').innerHTML = reviewList[count-1]['answer'];#}
 
     </script>
 
