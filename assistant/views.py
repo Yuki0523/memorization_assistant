@@ -68,3 +68,12 @@ class RecordReviewView(LoginRequiredMixin, base.View):
             reviewed_at=date.today()
         )
         return JsonResponse({})
+
+
+class RegisterListView(LoginRequiredMixin, generic.ListView):
+    model = Register
+    template_name = 'register_list.html'
+
+    def get_queryset(self):
+        registers = Register.objects.filter(user=self.request.user).order_by('pk')
+        return registers

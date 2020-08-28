@@ -10,6 +10,7 @@ footer {
 
 .my-div-style {
     margin-top: 6rem;
+    margin-bottom: 2rem;
 }
 
 #touroku {
@@ -18,6 +19,10 @@ footer {
 
 #fukushu {
     background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+}
+
+#ichiran {
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
 .my-button-style:link {

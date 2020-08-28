@@ -8,7 +8,7 @@
     <section>
         <div class="my-div-style">
             <div class="container-fluid">
-                <div class="row h-75">
+                <div class="row h-50">
                     <div class="col">
                         <a href="{% url 'assistant:registration' %}" class="my-button-style">
                             <div class="rounded-pill mx-auto h-100 d-flex align-items-center justify-content-center"
@@ -33,6 +33,19 @@
                             </div>
                         </a>
                     </div>
+                </div>
+                <hr>
+                <div class="h-25">
+                    <a href="{% url 'assistant:register_list' %}" class="my-button-style">
+                        <div class="rounded-pill mx-auto h-100 d-flex align-items-center justify-content-center"
+                             id="ichiran">
+                            <div>
+                                <h1 class="text-center">記録閲覧</h1>
+                                <p class="text-center">登録された学習内容と復習の記録を閲覧できます。<br>
+                                修正と削除はここから可能です。</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
