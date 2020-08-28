@@ -102,3 +102,9 @@ class RegisterUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('assistant:register_detail', kwargs={'pk': self.kwargs['pk']})
+
+
+class RegisterDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Register
+    template_name = 'register_delete.html'
+    success_url = reverse_lazy('assistant:register_list')
