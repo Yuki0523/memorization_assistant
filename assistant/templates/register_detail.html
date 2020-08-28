@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}記録閲覧モード | Memorization Assistant{% endblock %}
+
+{% block contents %}
+    <div class="my-div-style container">
+        <h2 class="text-center">学習内容</h2>
+        <p class="text-center">問題:{{ object.question }}</p>
+        <p class="text-center">解答:{{ object.answer }}</p>
+        <p class="text-center">学習日:{{ object.studied_at }}</p>
+        <hr class="text-center">
+        <h2 class="text-center">復習の記録</h2>
+        {% for review in review_list %}
+            <p class="text-center">{{ forloop.counter }}回目:{{ review.reviewed_at }}:
+                {% if review.result %}
+                    正答
+                {% else %}
+                    誤答
+                {% endif %}
+            </p>
+        {% empty %}
+            <h3 class="text-center">復習の記録はありません。</h3>
+        {% endfor %}
+    </div>
+{% endblock %}

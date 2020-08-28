@@ -77,3 +77,18 @@ class RegisterListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         registers = Register.objects.filter(user=self.request.user).order_by('pk')
         return registers
+
+
+class RegisterDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Register
+    template_name = 'register_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['review_list'] = ReviewRecord.objects.filter(
+            target=Register.objects.filter(pk=self.kwargs.get('pk')).first()
+        ).order_by('reviewed_at')
+        print(self.kwargs.get('pk'))
+        print(Register.objects.filter(pk=self.kwargs.get('pk')).first())
+        print(context['review_list'])
+        return context

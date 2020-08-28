@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}記録一覧モード | Memorization Assistant{% endblock %}
+{% block title %}記録閲覧モード | Memorization Assistant{% endblock %}
 
 {% block contents %}
     <div class="container">
@@ -11,7 +11,7 @@
             <div class="col-lg-8 col-md-10 mx-auto">
                 {% for register in register_list %}
                     <div>
-                    <a href="#" class="my-button-style">
+                    <a href="{% url 'assistant:register_detail' register.pk %}" class="my-button-style">
                         <h2>
                             {{ forloop.counter }}: {{ register.question|truncatechars:20 }}
                         </h2>
@@ -22,7 +22,7 @@
                     </div>
                     <hr>
                 {% empty %}
-                    <p>記録がありません。</p>
+                    <h1 class="text-center">記録がありません。</h1>
                 {% endfor %}
             </div>
         </div>
