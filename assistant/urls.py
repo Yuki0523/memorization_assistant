@@ -12,4 +12,5 @@ urlpatterns = [
     path('list/<int:pk>/', views.RegisterDetailView.as_view(), name='register_detail'),
     path('list/<int:pk>/update/', views.RegisterUpdateView.as_view(), name='register_update'),
     path('list/<int:pk>/update/delete', views.RegisterDeleteView.as_view(), name='register_delete'),
+    path('list/review_record/<int:pk>/update/', views.ReviewRecordUpdateView.as_view(), name='review_record_update'),
 ]

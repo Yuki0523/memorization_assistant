@@ -17,6 +17,7 @@
         <hr class="text-center">
         <h2 class="text-center">復習の記録</h2>
         {% for review in review_list %}
+            <a href="{% url 'assistant:review_record_update' review.pk %}" class="my-button-style">
             <p class="text-center">{{ forloop.counter }}回目:{{ review.reviewed_at }}:
                 {% if review.result %}
                     正答
@@ -24,6 +25,7 @@
                     誤答
                 {% endif %}
             </p>
+            </a>
         {% empty %}
             <h3 class="text-center">復習の記録はありません。</h3>
         {% endfor %}
