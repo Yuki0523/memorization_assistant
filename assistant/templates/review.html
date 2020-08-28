@@ -25,8 +25,10 @@
                     <p id="kaitoubun"></p>
                     <div>
                         <h6>正答できましたか？</h6>
-                        <input class="" type="button" value="Yes" onclick="recordReview();makeKaitouHidden();countUpOrFinish();setReview()"/>
-                        <input class="" type="button" value="No" onclick="incorrect();recordReview();makeKaitouHidden();countUpOrFinish();setReview()"/>
+                        <input class="" type="button" value="Yes"
+                               onclick="recordReview();makeKaitouHidden();countUpOrFinish();setReview()"/>
+                        <input class="" type="button" value="No"
+                               onclick="incorrect();recordReview();makeKaitouHidden();countUpOrFinish();setReview()"/>
                     </div>
                 </div>
             </div>
@@ -55,8 +57,7 @@
         function countUpOrFinish() {
             if (count < reviewList.length) {
                 count += 1
-            }
-            else {
+            } else {
                 document.getElementById('review').innerHTML = '<h1 class="text-center">解答終了</h1>'
             }
         }
@@ -84,8 +85,22 @@
             })
         }
 
-        makeKaitouHidden();
-        setReview()
+        function empty() {
+            if (reviewList.length == 0) {
+                document.getElementById('review').innerHTML = '<h1 class="text-center">本日の復習対象はありません。</h1>';
+                return true
+            } else {
+                return false
+            }
+        }
+
+
+        if (empty()) {
+            ;
+        } else {
+            makeKaitouHidden();
+            setReview()
+        }
 
     </script>
 
