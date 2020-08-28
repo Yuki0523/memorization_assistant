@@ -13,6 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Register
 from .models import ReviewRecord
 from .forms import RegistrationForm
+from .forms import RegisterUpdateForm
 
 
 class TopView(generic.TemplateView):
@@ -75,7 +76,7 @@ class RegisterListView(LoginRequiredMixin, generic.ListView):
     template_name = 'register_list.html'
 
     def get_queryset(self):
-        registers = Register.objects.filter(user=self.request.user).order_by('pk')
+        registers = Register.objects.filter(user=self.request.user).order_by('studied_at')
         return registers
 
 
@@ -92,3 +93,12 @@ class RegisterDetailView(LoginRequiredMixin, generic.DetailView):
         print(Register.objects.filter(pk=self.kwargs.get('pk')).first())
         print(context['review_list'])
         return context
+
+
+class RegisterUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Register
+    template_name = 'register_update.html'
+    form_class = RegisterUpdateForm
+
+    def get_success_url(self):
+        return reverse_lazy('assistant:register_detail', kwargs={'pk': self.kwargs['pk']})

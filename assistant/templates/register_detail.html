@@ -10,6 +10,10 @@
         <p class="text-center">問題:{{ object.question }}</p>
         <p class="text-center">解答:{{ object.answer }}</p>
         <p class="text-center">学習日:{{ object.studied_at }}</p>
+        <div class="d-flex justify-content-center">
+        <input type="button" value="学習内容を編集する" onclick="location.href='{% url 'assistant:register_update' object.pk %}'">
+        <input type="button" value="一覧に戻る" onclick="location.href='{% url 'assistant:register_list' %}'">
+        </div>
         <hr class="text-center">
         <h2 class="text-center">復習の記録</h2>
         {% for review in review_list %}
