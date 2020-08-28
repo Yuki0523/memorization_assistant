@@ -117,5 +117,12 @@ class ReviewRecordUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = ReviewRecordUpdateForm
 
     def get_success_url(self):
-        return reverse_lazy('assistant:register_detail',
-                            kwargs={'pk': self.object.target.pk})
+        return reverse_lazy('assistant:register_detail', kwargs={'pk': self.object.target.pk})
+
+
+class ReviewRecordDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = ReviewRecord
+    template_name = 'review_record_delete.html'
+
+    def get_success_url(self):
+        return reverse_lazy('assistant:register_detail', kwargs={'pk': self.object.target.pk})
