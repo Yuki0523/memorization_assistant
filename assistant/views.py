@@ -9,6 +9,8 @@ from django.http import JsonResponse
 from django.views.generic import base
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Count
+from django.db.models import Max
 
 from .models import Register
 from .models import ReviewRecord
@@ -51,8 +53,23 @@ class ReviewView(LoginRequiredMixin, generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        target_list = Register.objects.filter(
+            user=self.request.user,
+        ).annotate(
+            last_date_of_review=Max('reviewrecord__reviewed_at'),
+            number_of_review_record=Count('reviewrecord')
+        )
+        review_list = list()
+        today = date.today()
+        for target in target_list:
+            if target.last_date_of_review:
+                if (today - target.last_date_of_review).days >= 2 ** target.number_of_review_record:
+                    review_list.append(target)
+            else:
+                if (today - target.studied_at).days >= 1:
+                    review_list.append(target)
         context['review_list'] = json.dumps(
-            [review.to_dict() for review in Register.objects.filter(user=self.request.user)],
+            [review.to_dict() for review in review_list],
             ensure_ascii=False
         )
         return context
@@ -90,9 +107,6 @@ class RegisterDetailView(LoginRequiredMixin, generic.DetailView):
         context['review_list'] = ReviewRecord.objects.filter(
             target=Register.objects.filter(pk=self.kwargs.get('pk')).first()
         ).order_by('reviewed_at')
-        print(self.kwargs.get('pk'))
-        print(Register.objects.filter(pk=self.kwargs.get('pk')).first())
-        print(context['review_list'])
         return context
 
 
