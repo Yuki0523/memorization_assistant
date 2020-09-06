@@ -5,6 +5,7 @@ from .models import ReviewRecord
 
 
 class RegistrationForm(forms.ModelForm):
+    """学習内容を登録するためのフォーム"""
     class Meta:
         model = Register
         fields = ('question', 'answer')
@@ -16,6 +17,7 @@ class RegistrationForm(forms.ModelForm):
 
 
 class RegisterUpdateForm(forms.ModelForm):
+    """学習内容を編集するためのフォーム"""
     class Meta:
         model = Register
         fields = ('question', 'answer', 'studied_at')
@@ -27,6 +29,7 @@ class RegisterUpdateForm(forms.ModelForm):
 
 
 class ReviewRecordUpdateForm(forms.ModelForm):
+    """復習の記録を編集するためのフォーム"""
     class Meta:
         model = ReviewRecord
         fields = ('result', 'reviewed_at')

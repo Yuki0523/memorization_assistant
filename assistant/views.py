@@ -20,6 +20,7 @@ from .forms import ReviewRecordUpdateForm
 
 
 class TopView(generic.TemplateView):
+    """トップページのビュークラス"""
     def get_template_names(self):
         if self.request.user.is_authenticated:
             template_name = 'top_log_in.html'
@@ -30,6 +31,7 @@ class TopView(generic.TemplateView):
 
 
 class RegistrationView(LoginRequiredMixin, generic.CreateView):
+    """"学習内容を登録する画面のビュークラス"""
     model = Register
     template_name = 'registration.html'
     form_class = RegistrationForm
@@ -49,6 +51,7 @@ class RegistrationView(LoginRequiredMixin, generic.CreateView):
 
 
 class ReviewView(LoginRequiredMixin, generic.TemplateView):
+    """"復習する画面のビュークラス"""
     template_name = 'review.html'
 
     def get_context_data(self, **kwargs):
@@ -77,6 +80,7 @@ class ReviewView(LoginRequiredMixin, generic.TemplateView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class RecordReviewView(LoginRequiredMixin, base.View):
+    """復習の結果を非同期通信で記録するビュークラス"""
     template_name = 'review.html'
 
     def post(self, request, *args, **kwargs):
@@ -90,6 +94,7 @@ class RecordReviewView(LoginRequiredMixin, base.View):
 
 
 class RegisterListView(LoginRequiredMixin, generic.ListView):
+    """学習内容を一覧表示する画面のビュークラス"""
     model = Register
     template_name = 'register_list.html'
 
@@ -99,6 +104,7 @@ class RegisterListView(LoginRequiredMixin, generic.ListView):
 
 
 class RegisterDetailView(LoginRequiredMixin, generic.DetailView):
+    """学習内容の詳細を閲覧する画面のビュークラス"""
     model = Register
     template_name = 'register_detail.html'
 
@@ -111,6 +117,7 @@ class RegisterDetailView(LoginRequiredMixin, generic.DetailView):
 
 
 class RegisterUpdateView(LoginRequiredMixin, generic.UpdateView):
+    """学習内容を編集する画面のビュークラス"""
     model = Register
     template_name = 'register_update.html'
     form_class = RegisterUpdateForm
@@ -120,12 +127,14 @@ class RegisterUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 class RegisterDeleteView(LoginRequiredMixin, generic.DeleteView):
+    """学習内容を削除する画面のビュークラス"""
     model = Register
     template_name = 'register_delete.html'
     success_url = reverse_lazy('assistant:register_list')
 
 
 class ReviewRecordUpdateView(LoginRequiredMixin, generic.UpdateView):
+    """復習の記録を編集する画面のビュークラス"""
     model = ReviewRecord
     template_name = 'review_record_update.html'
     form_class = ReviewRecordUpdateForm
@@ -135,6 +144,7 @@ class ReviewRecordUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 class ReviewRecordDeleteView(LoginRequiredMixin, generic.DeleteView):
+    """復習の記録を削除する画面のビュークラス"""
     model = ReviewRecord
     template_name = 'review_record_delete.html'
 
