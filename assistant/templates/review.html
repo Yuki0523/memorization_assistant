@@ -6,34 +6,6 @@
 
 {% block head %}
     <script src="{% static 'js/jquery-3.5.1.js' %}"></script>
-{% endblock %}
-
-{% block contents %}
-    <section>
-        <div class="my-div-style container-fluid h-75 d-flex align-items-center justify-content-center">
-            <div id="review" class="col">
-                <div class="text-center">
-                    <h2 class="">問題</h2>
-                    <p id="mondaibun"></p>
-                    <div class="d-flex justify-content-center">
-                        <input class="row" type="button" value="解答を表示する" onclick="ChangeKaitouVisibility()"/>
-                    </div>
-                </div>
-                <hr>
-                <div id="kaitou" class="text-center">
-                    <h2>解答</h2>
-                    <p id="kaitoubun"></p>
-                    <div>
-                        <h6>正答できましたか？</h6>
-                        <input class="" type="button" value="Yes"
-                               onclick="recordReview();makeKaitouHidden();countUpOrFinish();setReview()"/>
-                        <input class="" type="button" value="No"
-                               onclick="incorrect();recordReview();makeKaitouHidden();countUpOrFinish();setReview()"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <script type="text/javascript">
         let reviewList = {{ review_list|safe }};
@@ -45,7 +17,7 @@
         function ChangeKaitouVisibility() {
             const kaitou = document.getElementById('kaitou');
 
-            if (kaitou.style.visibility == 'hidden') {
+            if (kaitou.style.visibility === 'hidden') {
                 kaitou.style.visibility = 'visible'
             } else {
                 kaitou.style.visibility = 'hidden'
@@ -79,29 +51,59 @@
 
         function recordReview() {
             $.ajax({
-                url: '{% url 'assistant:record_review' %}',
+                url: '{% url 'assistant:create_review_record' %}',
                 type: 'POST',
                 data: JSON.stringify({pk: pk, result: result})
             })
         }
 
         function empty() {
-            if (reviewList.length == 0) {
-                document.getElementById('review').innerHTML = '<h1 class="text-center">本日の復習対象はありません。</h1>';
+            if (reviewList.length === 0) {
+                document.getElementById('review').innerHTML = '<h3>本日の復習対象はありません。</h3>';
                 return true
             } else {
                 return false
             }
         }
 
-
-        if (empty()) {
-            ;
-        } else {
-            makeKaitouHidden();
-            setReview()
+        window.onload = function () {
+            if (empty()) {
+            } else {
+                makeKaitouHidden();
+                setReview()
+            }
         }
 
     </script>
+
+{% endblock %}
+
+{% block contents %}
+    <div class="my-div-style container text-center">
+        <h1>復習</h1>
+        <div id="review">
+            <div>
+                <h3>問題</h3>
+                <p id="mondaibun"></p>
+                <button type="button" onclick="ChangeKaitouVisibility()">
+                    解答を表示する
+                </button>
+                <hr>
+            </div>
+            <div id="kaitou">
+                <h3>解答</h3>
+                <p id="kaitoubun"></p>
+                <p>正答できましたか？</p>
+                <button class="" type="button"
+                        onclick="recordReview();makeKaitouHidden();countUpOrFinish();setReview()">
+                    Yes
+                </button>
+                <button class="" type="button"
+                        onclick="incorrect();recordReview();makeKaitouHidden();countUpOrFinish();setReview()">
+                    No
+                </button>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

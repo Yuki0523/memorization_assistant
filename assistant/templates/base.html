@@ -5,8 +5,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>{% block title %}{% endblock %}</title>
 
@@ -23,17 +21,24 @@
 
     <!-- My style -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/mystyle.css' %}">
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
     {% block head %}{% endblock %}
 </head>
 
 <body>
 <div id="wrapper">
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand navbar-dark navbar-custom fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{% url 'assistant:top' %}">Memorization Assistant</a>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
+
                     {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'account_logout' %}">Log Out</a>
@@ -43,12 +48,11 @@
                             <a class="nav-link" href="{% url 'account_login' %}">Log In</a>
                         </li>
                     {% endif %}
+
                 </ul>
             </div>
         </div>
     </nav>
-
-    {% block header %}{% endblock %}
 
     {% block contents %}{% endblock %}
 
@@ -60,9 +64,6 @@
         <!-- /.container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
 </div>
 </body>
 

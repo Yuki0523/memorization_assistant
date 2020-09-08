@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}管理モード | Memorization Assistant{% endblock %}
+
+{% block contents %}
+    <div class="my-div-style container text-center">
+        <h1>復習記録編集</h1>
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <table class="table">
+                {{ form.as_table }}
+            </table>
+            <button type="submit">更新</button>
+            <button type="button" onclick="location.href='{% url 'assistant:register_detail' object.pk %}'">キャンセル
+            </button>
+        </form>
+        <button type="button" onclick="location.href='{% url 'assistant:delete_review_record' object.pk %}'">削除する</button>
+    </div>
+{% endblock %}

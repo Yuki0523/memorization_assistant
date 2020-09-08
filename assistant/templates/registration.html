@@ -1,23 +1,18 @@
 {% extends 'base.html' %}
 
-{% load static %}
-
 {% block title %}登録モード | Memorization Assistant{% endblock %}
 
 {% block contents %}
-    <div class="container">
-        <div class="row">
-            <div class="my-div-style w-100">
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <table class="table">
-                        {{ form.as_table }}
-                    </table>
-                    <div class="d-flex justify-content-center">
-                    <button class="btn btn-primary" type="submit">登録</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+    <div class="my-div-style container text-center">
+        <h1>登録</h1>
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <table class="table">
+                {{ form.as_table }}
+            </table>
+            <button type="submit">登録</button>
+        </form>
     </div>
 {% endblock %}

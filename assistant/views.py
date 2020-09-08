@@ -2,21 +2,21 @@ from datetime import date
 import json
 
 from django.contrib import messages
-from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from django.http import JsonResponse
-from django.views.generic import base
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Count
 from django.db.models import Max
+from django.http import JsonResponse
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views import generic
+from django.views.generic import base
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Register
 from .models import ReviewRecord
 from .forms import RegistrationForm
-from .forms import RegisterUpdateForm
-from .forms import ReviewRecordUpdateForm
+from .forms import UpdateRegisterForm
+from .forms import UpdateReviewRecordForm
 
 
 class TopView(generic.TemplateView):
@@ -79,7 +79,7 @@ class ReviewView(LoginRequiredMixin, generic.TemplateView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class RecordReviewView(LoginRequiredMixin, base.View):
+class CreateReviewRecordView(LoginRequiredMixin, base.View):
     """復習の結果を非同期通信で記録するビュークラス"""
     template_name = 'review.html'
 
@@ -116,37 +116,37 @@ class RegisterDetailView(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class RegisterUpdateView(LoginRequiredMixin, generic.UpdateView):
+class UpdateRegisterView(LoginRequiredMixin, generic.UpdateView):
     """学習内容を編集する画面のビュークラス"""
     model = Register
-    template_name = 'register_update.html'
-    form_class = RegisterUpdateForm
+    template_name = 'update_register.html'
+    form_class = UpdateRegisterForm
 
     def get_success_url(self):
         return reverse_lazy('assistant:register_detail', kwargs={'pk': self.kwargs['pk']})
 
 
-class RegisterDeleteView(LoginRequiredMixin, generic.DeleteView):
+class DeleteRegisterView(LoginRequiredMixin, generic.DeleteView):
     """学習内容を削除する画面のビュークラス"""
     model = Register
-    template_name = 'register_delete.html'
+    template_name = 'delete_register.html'
     success_url = reverse_lazy('assistant:register_list')
 
 
-class ReviewRecordUpdateView(LoginRequiredMixin, generic.UpdateView):
+class UpdateReviewRecordView(LoginRequiredMixin, generic.UpdateView):
     """復習の記録を編集する画面のビュークラス"""
     model = ReviewRecord
-    template_name = 'review_record_update.html'
-    form_class = ReviewRecordUpdateForm
+    template_name = 'update_review_record.html'
+    form_class = UpdateReviewRecordForm
 
     def get_success_url(self):
         return reverse_lazy('assistant:register_detail', kwargs={'pk': self.object.target.pk})
 
 
-class ReviewRecordDeleteView(LoginRequiredMixin, generic.DeleteView):
+class DeleteReviewRecordView(LoginRequiredMixin, generic.DeleteView):
     """復習の記録を削除する画面のビュークラス"""
     model = ReviewRecord
-    template_name = 'review_record_delete.html'
+    template_name = 'delete_review_record.html'
 
     def get_success_url(self):
         return reverse_lazy('assistant:register_detail', kwargs={'pk': self.object.target.pk})

@@ -16,7 +16,7 @@ class RegistrationForm(forms.ModelForm):
             field.widget.attrs['class'] = 'form-control'
 
 
-class RegisterUpdateForm(forms.ModelForm):
+class UpdateRegisterForm(forms.ModelForm):
     """学習内容を編集するためのフォーム"""
     class Meta:
         model = Register
@@ -28,7 +28,7 @@ class RegisterUpdateForm(forms.ModelForm):
             field.widget.attrs['class'] = 'form-control'
 
 
-class ReviewRecordUpdateForm(forms.ModelForm):
+class UpdateReviewRecordForm(forms.ModelForm):
     """復習の記録を編集するためのフォーム"""
     class Meta:
         model = ReviewRecord

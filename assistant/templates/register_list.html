@@ -1,31 +1,22 @@
 {% extends 'base.html' %}
 
-{% load static %}
-
-{% block title %}記録閲覧モード | Memorization Assistant{% endblock %}
+{% block title %}管理モード | Memorization Assistant{% endblock %}
 
 {% block contents %}
-    <div class="container">
-    <div class="row">
-        <div class="my-div-style w-100">
-            <div class="col-lg-8 col-md-10 mx-auto">
-                {% for register in register_list %}
-                    <div>
-                    <a href="{% url 'assistant:register_detail' register.pk %}" class="my-button-style">
-                        <h2>
-                            {{ forloop.counter }}: {{ register.question|truncatechars:20 }}
-                        </h2>
-                        <h3>
-                            学習日: {{ register.studied_at }}
-                        </h3>
-                    </a>
-                    </div>
-                    <hr>
-                {% empty %}
-                    <h1 class="text-center">記録がありません。</h1>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
+    <div class="my-div-style container text-center">
+        <h1>学習内容一覧</h1>
+        {% for register in register_list %}
+            <a href="{% url 'assistant:register_detail' register.pk %}" class="my-button-style">
+                <p>
+                    {{ forloop.counter }}: {{ register.question|truncatechars:20 }}
+                </p>
+                <p>
+                    学習日: {{ register.studied_at }}
+                </p>
+            </a>
+            <hr>
+        {% empty %}
+            <p>記録がありません。</p>
+        {% endfor %}
     </div>
 {% endblock %}
