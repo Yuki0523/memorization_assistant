@@ -14,7 +14,7 @@
         <hr>
         <h2>復習の記録</h2>
         {% for review in review_list %}
-            <a href="{% url 'assistant:update_review_record' review.pk %}" class="my-button-style">
+            <a href="{% url 'assistant:update_review_record' review.pk %}" class="my-link-style">
                 <p>{{ forloop.counter }}回目:{{ review.reviewed_at }}:
 
                     {% if review.result %}

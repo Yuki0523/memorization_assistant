@@ -1,54 +1,32 @@
 {% extends 'base.html' %}
 
-{% load static %}
-
 {% block title %}知識の定着を支援するWebアプリケーション | Memorization Assistant{% endblock %}
 
 {% block contents %}
-    <section>
-        <div class="my-div-style">
-            <div class="container-fluid">
-                <div class="row h-50">
+        <div class="my-div-style container text-center">
+                <div class="row">
                     <div class="col">
-                        <a href="{% url 'assistant:registration' %}" class="my-button-style">
-                            <div class="rounded-pill mx-auto h-100 d-flex align-items-center justify-content-center"
-                                 id="touroku">
-                                <div>
+                        <button type="button" onclick="location.href='{% url 'assistant:registration' %}'" class="rounded-pill my-link-style">
                                     <h1 class="text-center">登録</h1>
                                     <p class="text-center">新たに学んだことをデータベースに登録しておきましょう。<br>
                                         登録された内容は、復習モードにおいて最適なタイミングで出題されます。</p>
-                                </div>
-                            </div>
-                        </a>
+                        </button>
                     </div>
                     <div class="col">
-                        <a href="{% url 'assistant:review' %}" class="my-button-style">
-                            <div class="rounded-pill mx-auto h-100 d-flex align-items-center justify-content-center"
-                                 id="fukushu">
-                                <div>
+                        <button type="button" onclick="location.href='{% url 'assistant:review' %}'" class="rounded-pill my-link-style">
                                     <h1 class="text-center">復習</h1>
                                     <p class="text-center">"いま"復習すべきことをデータベースから出題します。<br>
                                         復習の結果は記録され、次の出題タイミングの算出に用いられます。</p>
-                                </div>
-                            </div>
-                        </a>
+                        </button>
                     </div>
                 </div>
                 <hr>
-                <div class="h-25">
-                    <a href="{% url 'assistant:register_list' %}" class="my-button-style">
-                        <div class="rounded-pill mx-auto h-100 d-flex align-items-center justify-content-center"
-                             id="ichiran">
-                            <div>
+                <div>
+                    <button type="button" onclick="location.href='{% url 'assistant:register_list' %}'" class="rounded-pill my-link-style">
                                 <h1 class="text-center">管理</h1>
                                 <p class="text-center">登録された学習内容と復習の記録を確認できます。<br>
                                 修正と削除はここから可能です。</p>
-                            </div>
-                        </div>
-                    </a>
+                    </button>
                 </div>
-            </div>
         </div>
-    </section>
-
 {% endblock %}

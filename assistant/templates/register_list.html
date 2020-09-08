@@ -6,7 +6,7 @@
     <div class="my-div-style container text-center">
         <h1>学習内容一覧</h1>
         {% for register in register_list %}
-            <a href="{% url 'assistant:register_detail' register.pk %}" class="my-button-style">
+            <a href="{% url 'assistant:register_detail' register.pk %}" class="my-link-style">
                 <p>
                     {{ forloop.counter }}: {{ register.question|truncatechars:20 }}
                 </p>

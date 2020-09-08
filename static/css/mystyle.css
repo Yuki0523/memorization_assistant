@@ -13,34 +13,7 @@ footer {
     margin-bottom: 2rem;
 }
 
-#touroku {
-    background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
-}
-
-#fukushu {
-    background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
-}
-
-#ichiran {
-    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-}
-
-.my-button-style:link {
-    color: black;
-    text-decoration: none;
-}
-
-.my-button-style:visited {
-    color: black;
-    text-decoration: none;
-}
-
-.my-button-style:hover {
-    color: black;
-    text-decoration: none;
-}
-
-.my-button-style:active {
+.my-link-style:link, .my-link-style:visited, .my-link-style:hover, .my-link-style:active {
     color: black;
     text-decoration: none;
 }
