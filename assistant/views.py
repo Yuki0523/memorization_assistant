@@ -40,6 +40,7 @@ class RegistrationView(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         register = form.save(commit=False)
         register.user = self.request.user
+        # TODO:モデル側で auto_new_add=True としたほうがいいのではないか。要検討
         register.studied_at = date.today()
         register.save()
         messages.success(self.request, '登録しました。')
@@ -55,6 +56,17 @@ class ReviewView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'review.html'
 
     def get_context_data(self, **kwargs):
+        """条件に該当する学習内容のみをコンテキストに加えるためのオーバーライド
+
+        条件は次のとおり:
+            復習回数0回:学習内容の登録日から本日まで1日以上経過しているかどうか
+            復習回数1回:最後の復習日から本日まで2日以上経過しているかどうか
+            復習回数2回:最後の復習日から本日まで4日以上経過しているかどうか
+            復習回数3回:最後の復習日から本日まで8日以上経過しているかどうか
+            ・
+            ・
+            ・
+            復習回数n回:最後の復習日から本日まで 2**n 日以上経過しているかどうか"""
         context = super().get_context_data(**kwargs)
         target_list = Register.objects.filter(
             user=self.request.user,
@@ -78,6 +90,7 @@ class ReviewView(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
+# TODO:いずれこの方法はやめてフロントエンド側の工夫でCSRF検証を突破できるようにする
 @method_decorator(csrf_exempt, name='dispatch')
 class CreateReviewRecordView(LoginRequiredMixin, base.View):
     """復習の結果を非同期通信で記録するビュークラス"""
@@ -88,6 +101,7 @@ class CreateReviewRecordView(LoginRequiredMixin, base.View):
         ReviewRecord.objects.create(
             target=Register.objects.filter(pk=result['pk']).first(),
             result=result['result'],
+            # TODO:モデル側で auto_new_add=True としたほうがいいのではないか。要検討
             reviewed_at=date.today()
         )
         return JsonResponse({})
@@ -108,7 +122,12 @@ class RegisterDetailView(LoginRequiredMixin, generic.DetailView):
     model = Register
     template_name = 'register_detail.html'
 
+    def get_queryset(self):
+        queryset = Register.objects.filter(user=self.request.user)
+        return queryset
+
     def get_context_data(self, **kwargs):
+        """学習内容に対応する復習の記録の一覧もコンテキストに加えるためのオーバーライド"""
         context = super().get_context_data(**kwargs)
         context['review_list'] = ReviewRecord.objects.filter(
             target=Register.objects.filter(pk=self.kwargs.get('pk')).first()
@@ -122,6 +141,10 @@ class UpdateRegisterView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'update_register.html'
     form_class = UpdateRegisterForm
 
+    def get_queryset(self):
+        queryset = Register.objects.filter(user=self.request.user)
+        return queryset
+
     def get_success_url(self):
         return reverse_lazy('assistant:register_detail', kwargs={'pk': self.kwargs['pk']})
 
@@ -132,12 +155,20 @@ class DeleteRegisterView(LoginRequiredMixin, generic.DeleteView):
     template_name = 'delete_register.html'
     success_url = reverse_lazy('assistant:register_list')
 
+    def get_queryset(self):
+        queryset = Register.objects.filter(user=self.request.user)
+        return queryset
+
 
 class UpdateReviewRecordView(LoginRequiredMixin, generic.UpdateView):
     """復習の記録を編集する画面のビュークラス"""
     model = ReviewRecord
     template_name = 'update_review_record.html'
     form_class = UpdateReviewRecordForm
+
+    def get_queryset(self):
+        queryset = ReviewRecord.objects.filter(target__user=self.request.user)
+        return queryset
 
     def get_success_url(self):
         return reverse_lazy('assistant:register_detail', kwargs={'pk': self.object.target.pk})
@@ -147,6 +178,10 @@ class DeleteReviewRecordView(LoginRequiredMixin, generic.DeleteView):
     """復習の記録を削除する画面のビュークラス"""
     model = ReviewRecord
     template_name = 'delete_review_record.html'
+
+    def get_queryset(self):
+        queryset = ReviewRecord.objects.filter(target__user=self.request.user)
+        return queryset
 
     def get_success_url(self):
         return reverse_lazy('assistant:register_detail', kwargs={'pk': self.object.target.pk})

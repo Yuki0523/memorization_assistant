@@ -13,7 +13,7 @@
                 {{ form.as_table }}
             </table>
             <button type="submit">更新</button>
-            <button type="button" onclick="location.href='{% url 'assistant:register_detail' object.pk %}'">キャンセル
+            <button type="button" onclick="location.href='{% url 'assistant:register_detail' object.target.pk %}'">キャンセル
             </button>
         </form>
         <button type="button" onclick="location.href='{% url 'assistant:delete_review_record' object.pk %}'">削除する</button>
