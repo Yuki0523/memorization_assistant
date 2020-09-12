@@ -37,6 +37,7 @@ class RegistrationView(LoginRequiredMixin, generic.CreateView):
     form_class = RegistrationForm
     success_url = reverse_lazy('assistant:registration')
 
+    # TODO:要精査
     def form_valid(self, form):
         register = form.save(commit=False)
         register.user = self.request.user
@@ -46,6 +47,7 @@ class RegistrationView(LoginRequiredMixin, generic.CreateView):
         messages.success(self.request, '登録しました。')
         return super().form_valid(form)
 
+    # TODO:要精査
     def form_invalid(self, form):
         messages.error(self.request, '登録に失敗しました。')
         return super().form_invalid(form)
