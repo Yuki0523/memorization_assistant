@@ -27,7 +27,7 @@ LOGGING = {
 
     # ハンドラの設定
     'handlers': {
-        'console': {
+        'file': {
             'level': 'INFO',
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/django.log'),
