@@ -40,7 +40,7 @@ LOGGING = {
 
     # フォーマッタの設定
     'formatters': {
-        'prods': {
+        'prod': {
             'format': '\t'.join([
                 '%(asctime)s',
                 '[%(levelname)s',
